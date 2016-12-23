@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Accounting.Screen.Page.AdvanceMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel Margin="0">
+        <DockPanel Width="120" DockPanel.Dock="Left">
+            <Border BorderBrush="#C7C7C7" BorderThickness="0,0,1,0" >
+                <StackPanel Name="AdvMenuSelection" MouseDown="AdvMenuSelection_MouseDown">
+                    <Label Name="AccountTypeLabel" ToolTip="Account type" Padding="8">Account Type</Label>
+                    <Label Name="ChartOfAccountsLabel" ToolTip="Chart of accounts" Padding="8">Chart of Accounts</Label>
+                    <Label Name="TaxCodeLabel" Padding="8" ToolTip="Tax codes">Tax Codes</Label>
+                    <Label Name="CurrencyLabel" Padding="8" Visibility="Collapsed">Currency</Label>
+                    <Label Name="TermLabel" Padding="8" Visibility="Collapsed">Terms</Label>
+
+                    <Label Name="TransactionLabel" ToolTip="Transaction Accounts Preset (Inventory)" Padding="8" Margin="0,16,0,0">Transaction Preset</Label>
+                    <Label Name="PaymentReceiptLabel" ToolTip="Accounts for payment and receipt vouchers" Padding="8">Visible Accounts</Label>
+                    <Label Name="PaymentMethodLabel" ToolTip="Payment methods and linking account" Padding="8">Payment Methods</Label>
+
+                    <Label Name="JournalEntryLabel" ToolTip="Manual adjustment" Padding="8" Margin="0,16,0,0">Journal Entry</Label>
+
+                </StackPanel>
+            </Border>
+        </DockPanel>
+
+        <DockPanel Name="DisplayContentPanel" Visibility="Hidden">
+            <DockPanel Name="DisplayContentTitle"  DockPanel.Dock="Top" Height="40">
+                <Border BorderThickness="0,0,0,1" BorderBrush="#C7C7C7">
+                    <Label Name="ContentTitle" VerticalAlignment="Center" FontSize="24" Margin="8,0,0,0"></Label>
+                </Border>
+            </DockPanel>
+            <Border Name="ContentBorder" BorderThickness="0" BorderBrush="#C7C7C7">
+                <ContentControl Name="DisplayContent" Padding="8"></ContentControl>
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

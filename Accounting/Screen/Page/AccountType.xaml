@@ -1,0 +1,47 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Entity="clr-namespace:Accounting.Entity" x:Class="Accounting.Screen.Page.AccountType" 
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="account_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type Entity:account_type}, CreateList=True}"/>
+        <CollectionViewSource x:Key="refAccountTypeViewSource" d:DesignSource="{d:DesignInstance {x:Type Entity:account_type}, CreateList=True}"/>
+    </UserControl.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom" Height="56">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="8,8,8,16">
+                <Button x:Name="SaveButton" Content="Save" Width="120" Height="32" Margin="0,0,8,0" Click="SaveButton_Click"/>
+                <Button x:Name="CancelButton" Content="Discard" Width="120" Height="32" IsEnabled="False" Click="CancelButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Top" DataContext="{StaticResource account_typeViewSource}">
+            <DataGrid x:Name="account_typeDataGrid" CanUserDeleteRows="False" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CellEditEnding="account_typeDataGrid_CellEditEnding">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="account_nameColumn" Binding="{Binding account_name}" Header="Account Name" Width="120"/>
+                    <DataGridTextColumn x:Name="range_endColumn" Binding="{Binding range_end}" Header="Default Range Upbound" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="range_startColumn" Binding="{Binding range_start}" Header="Default Range Downbound" Width="SizeToHeader"/>
+                    <!--<DataGridTextColumn x:Name="typeColumn" Binding="{Binding type}" Header="Type (Creditor/Debtor)" Width="SizeToHeader"/>-->
+
+                    <DataGridComboBoxColumn x:Name="accountTypeColumn" 
+                                        Width="SizeToHeader" 
+                                        Header="Type (Creditor/Debtor)"
+                                        SelectedValueBinding="{Binding Path=type}"
+                                        SelectedValuePath="ref_account_type_id"
+                                        DisplayMemberPath="description"
+                                        >
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <CompositeCollection>
+                                <CollectionContainer Collection="{Binding Source={StaticResource refAccountTypeViewSource}}" />
+                            </CompositeCollection>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>
+
+                    <DataGridCheckBoxColumn x:Name="activeColumn" Binding="{Binding active}" Header="Enable" Width="SizeToHeader"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

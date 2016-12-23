@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D8D9C6D1-EF8B-421E-B2D2-E697FC47BE1E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Accounting</RootNamespace>
+    <AssemblyName>Accounting</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>c:\TEMP\vs\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <BaseIntermediateOutputPath>c:\TEMP\vs\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>c:\TEMP\vs\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <BaseIntermediateOutputPath>c:\TEMP\vs\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Accounting.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>c:\TEMP\vs\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>c:\TEMP\vs\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Screen\Contact\ContactHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Contact\CreateContact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Item\CreateItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Item\ItemHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\LeftPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Config.cs" />
+    <Compile Include="Const.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="Entity\accounting.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>accounting.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\accounting.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\accounting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>accounting.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\account_type.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\chart_of_accounts.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\contact.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\currency.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\expense.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\expense_item.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\general_ledger.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\invoice.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\invoice_item.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\invoice_payment.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\item.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\manual_adjustment.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\manual_adjustment_item.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\profile.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ref_account_type.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ref_contact_type.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ref_payment_made_type.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ref_payment_mode.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tax_code.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\term.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\user.cs">
+      <DependentUpon>accounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AccountDataModel.cs" />
+    <Compile Include="Screen\Common.cs" />
+    <Compile Include="Screen\Contact\ContactHome.xaml.cs">
+      <DependentUpon>ContactHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Contact\CreateContact.xaml.cs">
+      <DependentUpon>CreateContact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\HomeContent.cs" />
+    <Compile Include="Screen\Item\CreateItem.xaml.cs">
+      <DependentUpon>CreateItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Item\ItemHome.xaml.cs">
+      <DependentUpon>ItemHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\LeftPanel.xaml.cs">
+      <DependentUpon>LeftPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\AccountType.xaml.cs">
+      <DependentUpon>AccountType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\AdvanceMenu.xaml.cs">
+      <DependentUpon>AdvanceMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\ChartOfAccounts.xaml.cs">
+      <DependentUpon>ChartOfAccounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\ManualAdjustment.xaml.cs">
+      <DependentUpon>ManualAdjustment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\ReportHome.xaml.cs">
+      <DependentUpon>ReportHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\TaxCodes.xaml.cs">
+      <DependentUpon>TaxCodes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Page\Terms.xaml.cs">
+      <DependentUpon>Terms.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Preset\InventoryTransactionPreset.xaml.cs">
+      <DependentUpon>InventoryTransactionPreset.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Preset\PaymentMethodAndAccount.xaml.cs">
+      <DependentUpon>PaymentMethodAndAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Preset\PaymentReceiptVisibleAccounts.xaml.cs">
+      <DependentUpon>PaymentReceiptVisibleAccounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Report\TransactionRecords.xaml.cs">
+      <DependentUpon>TransactionRecords.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\TopMenuBar.xaml.cs">
+      <DependentUpon>TopMenuBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Transaction\TransactionForm.xaml.cs">
+      <DependentUpon>TransactionForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SysMain.cs" />
+    <Compile Include="Model\TestChartOfAccounts.cs" />
+    <Compile Include="Screen\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Screen\Page\AccountType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\AdvanceMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\ChartOfAccounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\ManualAdjustment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\ReportHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\TaxCodes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Page\Terms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Preset\InventoryTransactionPreset.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Preset\PaymentMethodAndAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Preset\PaymentReceiptVisibleAccounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Report\TransactionRecords.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\TopMenuBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\Transaction\TransactionForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Entity\accounting.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>accounting.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\accounting.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>accounting.edmx</DependentUpon>
+      <LastGenOutput>accounting.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\accounting.edmx.diagram">
+      <DependentUpon>accounting.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\accounting.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>accounting.edmx</DependentUpon>
+      <LastGenOutput>accounting.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Accounting.Entity.account_type.datasource" />
+    <None Include="Properties\DataSources\Accounting.Entity.chart_of_accounts.datasource" />
+    <None Include="Properties\DataSources\Accounting.Entity.tax_code.datasource" />
+    <None Include="Properties\DataSources\Accounting.Entity.term.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icons\attachment.png" />
+    <Resource Include="res\icons\back.png" />
+    <Resource Include="res\icons\barcode.png" />
+    <Resource Include="res\icons\bin.png" />
+    <Resource Include="res\icons\building.png" />
+    <Resource Include="res\icons\calc.png" />
+    <Resource Include="res\icons\calendar.png" />
+    <Resource Include="res\icons\card.png" />
+    <Resource Include="res\icons\cash.png" />
+    <Resource Include="res\icons\circular.png" />
+    <Resource Include="res\icons\compass.png" />
+    <Resource Include="res\icons\customer.png" />
+    <Resource Include="res\icons\delivery.png" />
+    <Resource Include="res\icons\discount.png" />
+    <Resource Include="res\icons\edit.png" />
+    <Resource Include="res\icons\folder.png" />
+    <Resource Include="res\icons\gift.png" />
+    <Resource Include="res\icons\home.png" />
+    <Resource Include="res\icons\idea.png" />
+    <Resource Include="res\icons\inventory.png" />
+    <Resource Include="res\icons\license.txt" />
+    <Resource Include="res\icons\lock.png" />
+    <Resource Include="res\icons\lock2.png" />
+    <Resource Include="res\icons\map.png" />
+    <Resource Include="res\icons\mark.png" />
+    <Resource Include="res\icons\memo.png" />
+    <Resource Include="res\icons\money.png" />
+    <Resource Include="res\icons\off.png" />
+    <Resource Include="res\icons\officephone.png" />
+    <Resource Include="res\icons\packing.png" />
+    <Resource Include="res\icons\phone.png" />
+    <Resource Include="res\icons\pin.png" />
+    <Resource Include="res\icons\receipt.png" />
+    <Resource Include="res\icons\report.png" />
+    <Resource Include="res\icons\sales.png" />
+    <Resource Include="res\icons\search.png" />
+    <Resource Include="res\icons\settings.png" />
+    <Resource Include="res\icons\shop.png" />
+    <Resource Include="res\icons\shopping.png" />
+    <Resource Include="res\icons\shopping_add.png" />
+    <Resource Include="res\icons\shopping_confirm.png" />
+    <Resource Include="res\icons\shopping_remove.png" />
+    <Resource Include="res\icons\sign.png" />
+    <Resource Include="res\icons\tag.png" />
+    <Resource Include="res\icons\task.png" />
+    <Resource Include="res\icons\transaction.png" />
+    <Resource Include="res\icons\trolley.png" />
+    <Resource Include="res\icons\trolley_add.png" />
+    <Resource Include="res\icons\trolley_confirm.png" />
+    <Resource Include="res\icons\trolley_remove.png" />
+    <Resource Include="res\icons\user.png" />
+    <Resource Include="res\icons\users.png" />
+    <Resource Include="res\icons\vendor.png" />
+    <Resource Include="res\icons\wallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\g\account_balance.png" />
+    <Resource Include="res\g\add.png" />
+    <Resource Include="res\g\alert.png" />
+    <Resource Include="res\g\arrow_down.png" />
+    <Resource Include="res\g\arrow_left.png" />
+    <Resource Include="res\g\arrow_left_end.png" />
+    <Resource Include="res\g\arrow_right.png" />
+    <Resource Include="res\g\arrow_right_end.png" />
+    <Resource Include="res\g\arrow_up.png" />
+    <Resource Include="res\g\assessment.png" />
+    <Resource Include="res\g\assignment.png" />
+    <Resource Include="res\g\assignment_late.png" />
+    <Resource Include="res\g\backup.png" />
+    <Resource Include="res\g\bin.png" />
+    <Resource Include="res\g\book.png" />
+    <Resource Include="res\g\bookmark.png" />
+    <Resource Include="res\g\clock.png" />
+    <Resource Include="res\g\connected.png" />
+    <Resource Include="res\g\contact.png" />
+    <Resource Include="res\g\content.png" />
+    <Resource Include="res\g\cross.png" />
+    <Resource Include="res\g\disabled.png" />
+    <Resource Include="res\g\disconnected.png" />
+    <Resource Include="res\g\download.png" />
+    <Resource Include="res\g\email.png" />
+    <Resource Include="res\g\error.png" />
+    <Resource Include="res\g\error_red.png" />
+    <Resource Include="res\g\favorite.png" />
+    <Resource Include="res\g\find.png" />
+    <Resource Include="res\g\find_in_page.png" />
+    <Resource Include="res\g\folder.png" />
+    <Resource Include="res\g\globe.png" />
+    <Resource Include="res\g\help.png" />
+    <Resource Include="res\g\home.png" />
+    <Resource Include="res\g\info.png" />
+    <Resource Include="res\g\keyboard.png" />
+    <Resource Include="res\g\launch.png" />
+    <Resource Include="res\g\menu.png" />
+    <Resource Include="res\g\more.png" />
+    <Resource Include="res\g\print.png" />
+    <Resource Include="res\g\refresh.png" />
+    <Resource Include="res\g\remove.png" />
+    <Resource Include="res\g\save.png" />
+    <Resource Include="res\g\secure.png" />
+    <Resource Include="res\g\settings.png" />
+    <Resource Include="res\g\store.png" />
+    <Resource Include="res\g\tick.png" />
+    <Resource Include="res\g\user.png" />
+    <Resource Include="res\g\warning.png" />
+    <Resource Include="res\g\warning_yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\g\dollar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\customization\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\design\contact.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\design\contact_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\design\items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\design\item_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\design\expense.png" />
+    <Resource Include="res\design\expense_new.png" />
+    <Resource Include="res\design\invoice.png" />
+    <Resource Include="res\design\invoice_new.png" />
+    <Resource Include="res\design\sales_receipt_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\wireframe\tx.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

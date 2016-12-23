@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Accounting.Screen.Page.ReportHome"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <Label DockPanel.Dock="Top" Margin="8,0,0,0" FontSize="16" FontWeight="DemiBold">Select a report type:</Label>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <WrapPanel>
+                <WrapPanel.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="18"></Setter>
+                        <Setter Property="FontWeight" Value="Normal"></Setter>
+                        <Setter Property="Width" Value="266"></Setter>
+                        <Setter Property="Height" Value="133"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Margin" Value="8"></Setter>
+                        <Setter Property="Background" Value="LightSteelBlue"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="SteelBlue"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </WrapPanel.Resources>
+                <Label x:Name="TxRecords" Content="Inventory Transaction Records" MouseDown="Report_MouseDown"/>
+                <Label x:Name="ProfitLoss" Content="Profit and Loss" MouseDown="Report_MouseDown"/>
+                <Label x:Name="BalanceSheet" Content="Balance Sheet" MouseDown="Report_MouseDown"/>
+                <Label x:Name="TrialBalance" Content="Trial Balance" MouseDown="Report_MouseDown"/>
+                <Label x:Name="LedjerSummary" Content="Ledjer Summary" MouseDown="Report_MouseDown"/>
+                <Label x:Name="LedjerActivity" Content="Ledjer Activity" MouseDown="Report_MouseDown"/>
+            </WrapPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

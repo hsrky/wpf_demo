@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Accounting.Screen.Item.ItemHome"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel Margin="8">
+        <DockPanel DockPanel.Dock="Top" Height="32">
+            <DockPanel DockPanel.Dock="Right" Width="120">
+                <Button Name="btnCreateNewContact" Content="Create New" Click="Button_Click" Background="#CE3F28" Foreground="White" />
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Left">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label FontSize="16">Items: </Label>
+                    <ComboBox Width="120" Height="32" FontSize="16" Margin="0" Padding="0">
+                        <ComboBoxItem>
+                            <Label>All</Label>
+                        </ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">
+                            <Label>Active</Label>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <Label>Inactive</Label>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <Button Margin="8,0,0,0" Padding="8,0,8,0">Mark Inactive</Button>
+                </StackPanel>
+            </DockPanel>
+        </DockPanel>
+        <DockPanel Margin="0,8,0,0">
+            <Border BorderThickness="1" CornerRadius="8" BorderBrush="SkyBlue">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Image Name="pic1" Source="/Accounting;component/res/design/items.png" Stretch="None"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

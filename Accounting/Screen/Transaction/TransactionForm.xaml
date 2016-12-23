@@ -1,0 +1,207 @@
+﻿<UserControl x:Class="Accounting.Screen.Transaction.TransactionForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ViewSourceTax"/>
+        <CollectionViewSource x:Key="ViewSourceChartsOfAccount"/>
+    </UserControl.Resources>
+    <DockPanel Margin="8">
+        <DockPanel DockPanel.Dock="Top" Height="32">
+            <DockPanel DockPanel.Dock="Left">
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Width="240" FontSize="16" Padding="0" FontWeight="DemiBold" Name="TransactionTitle">Invoice</Label>
+                </StackPanel>
+            </DockPanel>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom" Height="48" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,8">
+                <Button Name="btnCreate" Content="Create" Width="120" Margin="0,0,8,0" Background="#CE3F28" Foreground="White" Height="32" VerticalAlignment="Top" Click="btnCreate_Click" />
+                <Button Name="btnCancel" Width="120" Content="Discard" />
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Margin="0,8,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Height="240">
+                        <Border BorderThickness="0" BorderBrush="SkyBlue">
+                            <!-- top panel here -->
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Name="Column1" Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Name="Column2" Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Name="Column3" Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="2*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <DockPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="0,2,0,2">
+                                    <Label Content="Total" DockPanel.Dock="Top" Margin="0" Padding="0"/>
+                                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4">
+                                        <Viewbox>
+                                            <Label Name="TxLabelTotal" Content="RM 0.00" ToolTip="{Binding ElementName=TxLabelTotal, Path=Content}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                        </Viewbox>
+                                    </Border>
+                                </DockPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,2,4,2" HorizontalAlignment="Left">
+                                    <Label Content="Batch No." Margin="0" Padding="0"/>
+                                    <TextBox Height="24" Name="TxBatch" Width="160"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,2,4,2">
+                                    <Label Content="Payee*" Margin="0" Padding="0"/>
+                                    <TextBox Height="24" Name="TxPayee"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,2,4,2">
+                                    <Label Content="Date*" Margin="0" Padding="0"/>
+                                    <DatePicker Name="TxDate" Height="24" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,2,4,2">
+                                    <Label Content="Credit Card" Margin="0" Padding="0"/>
+                                    <TextBox Height="24" Name="TxCreditCard"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,2,4,2">
+                                    <Label Content="Cheque No." Margin="0" Padding="0"/>
+                                    <TextBox Height="24" Name="TxCheque"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,2,0,2">
+                                    <Label Content="Bank Details" Margin="0" Padding="0"/>
+                                    <TextBox Height="24" Name="TxBank"/>
+                                </StackPanel>
+                                <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,2,4,2" MaxWidth="{Binding ElementName=Column1, Path=Width}">
+                                    <Label Content="Purpose" DockPanel.Dock="Top" Margin="0" Padding="0"/>
+                                    <TextBox Name="TxPurpose" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch" />
+                                </DockPanel>
+                                <DockPanel  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,2,0,2">
+                                    <Label Content="Memo" DockPanel.Dock="Top" Margin="0" Padding="0"/>
+                                    <TextBox Name="TxMemo" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch"/>
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                    </DockPanel>
+                    <Border BorderThickness="0.5" BorderBrush="LightSkyBlue">
+                        <DockPanel DockPanel.Dock="Bottom">
+                            <DockPanel DockPanel.Dock="Bottom" Height="48">
+                                <Border BorderThickness="0,0.5,0,0" BorderBrush="LightSkyBlue" Background="#F0F0F0F0">
+                                    <!-- tax account here -->
+                                    <StackPanel>
+                                        <Label Content="Tax" Margin="0" Padding="4,0,0,0"></Label>
+                                        <Grid Margin="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width=".3*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <ComboBox Name="TxTaxName" Grid.Column="0" Margin="2" Height="24" 
+                                                      DisplayMemberPath="tax_codename">
+                                                <ComboBox.ItemsSource>
+                                                    <CompositeCollection>
+                                                        <ComboBoxItem Content="" />
+                                                        <CollectionContainer Collection="{Binding Source={StaticResource ViewSourceTax}}" />
+                                                    </CompositeCollection>
+                                                </ComboBox.ItemsSource>
+                                            </ComboBox>
+                                            <TextBox Name="TxTaxDebit" Grid.Column="1" Margin="2" Height="24"></TextBox>
+                                            <TextBox Name="TxTaxCredit" IsEnabled="False" Grid.Column="2" Margin="2" Height="24"></TextBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </DockPanel>
+                            <DockPanel DockPanel.Dock="Top">
+                                <Border BorderThickness="0" BorderBrush="LightSkyBlue">
+                                    <DockPanel>
+                                        <Grid DockPanel.Dock="Top" Height="24" Margin="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width=".3*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="Account" Grid.Column="0" FontWeight="DemiBold" Margin="0"></Label>
+                                            <Label Content="Debit" Grid.Column="1" FontWeight="DemiBold" HorizontalAlignment="Center"></Label>
+                                            <Label Content="Credit" Grid.Column="2" FontWeight="DemiBold" HorizontalAlignment="Center"></Label>
+                                        </Grid>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                            <!-- accounts input here -->
+                                            <Grid VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    <ColumnDefinition Width=".3*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <!-- http://deepak-sharma.net/2013/02/01/how-to-add-rows-and-columns-to-a-wpf-grid-programmatically/ -->
+                                                <ComboBox Name="TxAcc1" Grid.Row="0" Grid.Column="0" Margin="2" Height="24" 
+                                                          DisplayMemberPath="name">
+                                                    <ComboBox.ItemsSource>
+                                                        <CompositeCollection>
+                                                            <ComboBoxItem Content="" />
+                                                            <CollectionContainer Collection="{Binding Source={StaticResource ViewSourceChartsOfAccount}}" />
+                                                        </CompositeCollection>
+                                                    </ComboBox.ItemsSource>
+                                                </ComboBox>
+                                                <TextBox Name="TxAccDebit1" IsEnabled="False" Grid.Row="0" Grid.Column="1" Margin="2" Height="24"></TextBox>
+                                                <TextBox Name="TxAccCredit1" Grid.Row="0" Grid.Column="2" Margin="2" Height="24" TextChanged="TxAccCredit1_TextChanged"></TextBox>
+
+                                                <ComboBox Name="TxAcc2" Grid.Row="1" Grid.Column="0" Margin="2" Height="24"
+                                                          DisplayMemberPath="name">
+                                                    <ComboBox.ItemsSource>
+                                                        <CompositeCollection>
+                                                            <ComboBoxItem Content="" />
+                                                            <CollectionContainer Collection="{Binding Source={StaticResource ViewSourceChartsOfAccount}}" />
+                                                        </CompositeCollection>
+                                                    </ComboBox.ItemsSource>
+                                                </ComboBox>
+                                                <TextBox Name="TxAccDebit2" Grid.Row="1" Grid.Column="1" Margin="2" Height="24"></TextBox>
+                                                <TextBox Name="TxAccCredit2" IsEnabled="False" Grid.Row="1" Grid.Column="2" Margin="2" Height="24"></TextBox>
+
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </DockPanel>
+
+                                </Border>
+                            </DockPanel>
+                        </DockPanel>
+                    </Border>
+                </DockPanel>
+            </ScrollViewer>
+            <!--
+            <Border BorderThickness="1" CornerRadius="8" BorderBrush="SkyBlue">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Name:"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="E-Mail:"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Comment:"/>
+                        <TextBox Grid.Column="1" Grid.Row="0" Margin="3" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Margin="3" />
+                        <TextBox Grid.Column="1" Grid.Row="2" Margin="3" />
+                    </Grid>
+                </ScrollViewer>
+            </Border>
+            -->
+        </DockPanel>
+    </DockPanel>
+</UserControl>

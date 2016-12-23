@@ -1,0 +1,2090 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="accountingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account_type">
+          <Key>
+            <PropertyRef Name="account_type_id" />
+          </Key>
+          <Property Name="account_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="range_start" Type="varchar" MaxLength="10" />
+          <Property Name="range_end" Type="varchar" MaxLength="10" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chart_of_accounts">
+          <Key>
+            <PropertyRef Name="chart_of_accounts_id" />
+          </Key>
+          <Property Name="chart_of_accounts_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
+          <Property Name="tax_code_id" Type="int" />
+          <Property Name="account_type_id" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="contact_id" />
+          </Key>
+          <Property Name="contact_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="10" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="suffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="company" Type="nvarchar" MaxLength="50" />
+          <Property Name="display_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="30" />
+          <Property Name="phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="30" />
+          <Property Name="fax" Type="nvarchar" MaxLength="30" />
+          <Property Name="other" Type="nvarchar" MaxLength="30" />
+          <Property Name="website" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="postcode" Type="nvarchar" MaxLength="30" />
+          <Property Name="city" Type="nvarchar" MaxLength="30" />
+          <Property Name="state" Type="nvarchar" MaxLength="30" />
+          <Property Name="country" Type="nvarchar" MaxLength="30" />
+          <Property Name="shipping_address_same" Type="bit" />
+          <Property Name="ship_address" Type="nvarchar" MaxLength="255" />
+          <Property Name="ship_postcode" Type="nvarchar" MaxLength="30" />
+          <Property Name="ship_city" Type="nvarchar" MaxLength="30" />
+          <Property Name="ship_state" Type="nvarchar" MaxLength="30" />
+          <Property Name="ship_country" Type="nvarchar" MaxLength="30" />
+          <Property Name="trade_registration_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="gst_number" Type="nvarchar" MaxLength="30" />
+          <Property Name="gst_status_verified_date" Type="date" />
+          <Property Name="notes" Type="nvarchar(max)" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="contact_type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="currency">
+          <Key>
+            <PropertyRef Name="iso_code" />
+          </Key>
+          <Property Name="currency_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iso_code" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="sign" Type="nvarchar" MaxLength="5" />
+          <Property Name="currency" Type="nvarchar" MaxLength="255" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="expense">
+          <Key>
+            <PropertyRef Name="expense_id" />
+          </Key>
+          <Property Name="expense_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contact_id" Type="int" Nullable="false" />
+          <Property Name="paid_by_account_id" Type="int" Nullable="false" />
+          <Property Name="payment_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="is_bill" Type="bit" />
+          <Property Name="bill_date" Type="datetime2" Precision="7" />
+          <Property Name="bill_number" Type="datetime2" Precision="7" />
+          <Property Name="payment_due_date" Type="datetime2" Precision="7" />
+          <Property Name="ref_payment_made_type" Type="int" />
+          <Property Name="ref_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="tax_amount" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="amount_tax_inclusive" Type="bit" />
+          <Property Name="subtotal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="net_amount" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="auto_entry_date" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="expense_item">
+          <Key>
+            <PropertyRef Name="expense_item_id" />
+          </Key>
+          <Property Name="expense_item_id" Type="int" Nullable="false" />
+          <Property Name="expense_id" Type="int" Nullable="false" />
+          <Property Name="expense_account_id" Type="int" Nullable="false" />
+          <Property Name="subtotal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+          <Property Name="rate" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="tax_amount" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="net_amount" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="seq" Type="int" />
+        </EntityType>
+        <EntityType Name="general_ledger">
+          <Key>
+            <PropertyRef Name="general_ledger_id" />
+          </Key>
+          <Property Name="general_ledger_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="opening_debit_balance" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="opening_credit_balance" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="date" Type="datetime2" Precision="7" />
+          <Property Name="auto_enty_date" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contact_id" Type="int" Nullable="false" />
+          <Property Name="invoice_number" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="invoice_date" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="order_number" Type="nvarchar" MaxLength="30" />
+          <Property Name="terms_id" Type="int" Nullable="false" />
+          <Property Name="sales_person_id" Type="int" />
+          <Property Name="discount_percent" Type="float" />
+          <Property Name="discount_value" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="tax_amount" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="amount_tax_inclusive" Type="bit" />
+          <Property Name="subtotal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="net_amount" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="shipment_fee" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="shipment_date" Type="datetime2" Precision="7" />
+          <Property Name="shipment_via" Type="nvarchar" MaxLength="50" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="ref_payment_made_type_id" Type="int" />
+          <Property Name="auto_entry_date" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoice_item">
+          <Key>
+            <PropertyRef Name="invoice_item_id" />
+          </Key>
+          <Property Name="invoice_item_id" Type="int" Nullable="false" />
+          <Property Name="invoice_id" Type="int" Nullable="false" />
+          <Property Name="item_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+          <Property Name="unit_price" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="discount_percent" Type="float" />
+          <Property Name="discount_value" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="tax_amount" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="seq" Type="int" />
+        </EntityType>
+        <EntityType Name="invoice_payment">
+          <Key>
+            <PropertyRef Name="invoice_payment_id" />
+          </Key>
+          <Property Name="invoice_payment_id" Type="int" Nullable="false" />
+          <Property Name="deposit_account_id" Type="int" Nullable="false" />
+          <Property Name="invoice_id" Type="int" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="payment_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="auto_entry_date" Type="datetime2" Precision="7" />
+          <Property Name="ref_payment_mode_id" Type="int" Nullable="false" />
+          <Property Name="reference_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" />
+          <Property Name="SKU" Type="nvarchar" MaxLength="30" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
+          <Property Name="buy_price" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="sell_price" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="sell_price_tax_inclusive" Type="bit" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="sales_account" Type="int" />
+          <Property Name="purchase_account" Type="int" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="manual_adjustment">
+          <Key>
+            <PropertyRef Name="manual_adjustment_id" />
+          </Key>
+          <Property Name="manual_adjustment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ref_no" Type="varchar" MaxLength="30" />
+          <Property Name="memo" Type="nvarchar(max)" />
+          <Property Name="auto_entry_date" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="manual_adjustment_item">
+          <Key>
+            <PropertyRef Name="manual_adjustment_item_id" />
+          </Key>
+          <Property Name="manual_adjustment_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="manual_adjustment_id" Type="int" Nullable="false" />
+          <Property Name="chart_of_accounts_id" Type="int" Nullable="false" />
+          <Property Name="debit" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="credit" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="memo" Type="nvarchar(max)" />
+          <Property Name="seq" Type="int" />
+        </EntityType>
+        <EntityType Name="profile">
+          <Key>
+            <PropertyRef Name="profile_id" />
+          </Key>
+          <Property Name="profile_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="trade_registration_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="tax_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="gst_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="postcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="website" Type="nvarchar" MaxLength="50" />
+          <Property Name="current_financial_year" Type="date" />
+          <Property Name="financial_year_start" Type="date" />
+          <Property Name="financial_year_end" Type="date" />
+          <Property Name="currency_code" Type="char" MaxLength="3" />
+          <Property Name="product_version" Type="nvarchar" MaxLength="30" />
+          <Property Name="GAF_version" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ref_account_type">
+          <Key>
+            <PropertyRef Name="ref_account_type_id" />
+          </Key>
+          <Property Name="ref_account_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ref_contact_type">
+          <Key>
+            <PropertyRef Name="ref_contact_type_id" />
+          </Key>
+          <Property Name="ref_contact_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ref_payment_made_type">
+          <Key>
+            <PropertyRef Name="ref_payment_made_type_id" />
+          </Key>
+          <Property Name="ref_payment_made_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ref_payment_mode">
+          <Key>
+            <PropertyRef Name="ref_payment_mode_id" />
+          </Key>
+          <Property Name="ref_payment_mode_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tax_code">
+          <Key>
+            <PropertyRef Name="tax_code_id" />
+          </Key>
+          <Property Name="tax_code_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tax_codename" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="tax_code_desc" Type="nvarchar(max)" />
+          <Property Name="tax_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="tax_type_desc" Type="nvarchar(max)" />
+          <Property Name="purchase_taxable" Type="bit" Nullable="false" />
+          <Property Name="purchase_tax_rate" Type="float" />
+          <Property Name="supply_taxable" Type="bit" Nullable="false" />
+          <Property Name="supply_tax_rate" Type="float" />
+          <Property Name="registration_no" Type="nvarchar" MaxLength="30" />
+          <Property Name="tax_agency" Type="nvarchar" MaxLength="255" />
+          <Property Name="effective_date" Type="date" />
+          <Property Name="purchase_account_id" Type="int" />
+          <Property Name="supply_account_id" Type="int" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="term">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="term_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="allowance" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="display_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__account_ty__type__08B54D69">
+          <End Role="ref_account_type" Type="Self.ref_account_type" Multiplicity="1" />
+          <End Role="account_type" Type="Self.account_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_account_type">
+              <PropertyRef Name="ref_account_type_id" />
+            </Principal>
+            <Dependent Role="account_type">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chart_of___accou__09A971A2">
+          <End Role="account_type" Type="Self.account_type" Multiplicity="1" />
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account_type">
+              <PropertyRef Name="account_type_id" />
+            </Principal>
+            <Dependent Role="chart_of_accounts">
+              <PropertyRef Name="account_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chart_of___tax_c__0A9D95DB">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="chart_of_accounts">
+              <PropertyRef Name="tax_code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__contact__contact__2BFE89A6">
+          <End Role="ref_contact_type" Type="Self.ref_contact_type" Multiplicity="1" />
+          <End Role="contact" Type="Self.contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_contact_type">
+              <PropertyRef Name="ref_contact_type_id" />
+            </Principal>
+            <Dependent Role="contact">
+              <PropertyRef Name="contact_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__paid_by__0B91BA14">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="paid_by_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__ref_pay__0C85DE4D">
+          <End Role="ref_payment_made_type" Type="Self.ref_payment_made_type" Multiplicity="0..1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_made_type">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="ref_payment_made_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__supplie__0D7A0286">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="contact_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__tax_id__0E6E26BF">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__expen__0F624AF8">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="expense_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__expen__10566F31">
+          <End Role="expense" Type="Self.expense" Multiplicity="1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expense">
+              <PropertyRef Name="expense_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="expense_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__tax_i__114A936A">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__general_l__accou__123EB7A3">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="general_ledger" Type="Self.general_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="general_ledger">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__custome__1332DBDC">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="contact_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__ref_pay__14270015">
+          <End Role="ref_payment_made_type" Type="Self.ref_payment_made_type" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_made_type">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__sales_p__151B244E">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="sales_person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__tax_id__160F4887">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__terms_i__17036CC0">
+          <End Role="term" Type="Self.term" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="term">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="terms_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__invoi__17F790F9">
+          <End Role="invoice" Type="Self.invoice" Multiplicity="1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="invoice_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="invoice_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__item___18EBB532">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__tax_i__19DFD96B">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__depos__1AD3FDA4">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="deposit_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__invoi__1BC821DD">
+          <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="invoice_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="invoice_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__ref_p__1CBC4616">
+          <End Role="ref_payment_mode" Type="Self.ref_payment_mode" Multiplicity="1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_mode">
+              <PropertyRef Name="ref_payment_mode_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="ref_payment_mode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__purchase_a__1DB06A4F">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="purchase_account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__sales_acco__1EA48E88">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="sales_account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__tax_id__1F98B2C1">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__manual_ad__chart__208CD6FA">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="manual_adjustment_item" Type="Self.manual_adjustment_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="manual_adjustment_item">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__manual_ad__manua__2180FB33">
+          <End Role="manual_adjustment" Type="Self.manual_adjustment" Multiplicity="1" />
+          <End Role="manual_adjustment_item" Type="Self.manual_adjustment_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="manual_adjustment">
+              <PropertyRef Name="manual_adjustment_id" />
+            </Principal>
+            <Dependent Role="manual_adjustment_item">
+              <PropertyRef Name="manual_adjustment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profile__currenc__22751F6C">
+          <End Role="currency" Type="Self.currency" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="currency">
+              <PropertyRef Name="iso_code" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="currency_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tax_code__purcha__236943A5">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="tax_code">
+              <PropertyRef Name="purchase_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tax_code__supply__245D67DE">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="tax_code">
+              <PropertyRef Name="supply_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="accountingModelStoreContainer">
+          <EntitySet Name="account_type" EntityType="Self.account_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chart_of_accounts" EntityType="Self.chart_of_accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contact" EntityType="Self.contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="currency" EntityType="Self.currency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expense" EntityType="Self.expense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expense_item" EntityType="Self.expense_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="general_ledger" EntityType="Self.general_ledger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invoice_item" EntityType="Self.invoice_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invoice_payment" EntityType="Self.invoice_payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="item" EntityType="Self.item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="manual_adjustment" EntityType="Self.manual_adjustment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="manual_adjustment_item" EntityType="Self.manual_adjustment_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profile" EntityType="Self.profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_account_type" EntityType="Self.ref_account_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_contact_type" EntityType="Self.ref_contact_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_payment_made_type" EntityType="Self.ref_payment_made_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_payment_mode" EntityType="Self.ref_payment_mode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tax_code" EntityType="Self.tax_code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="term" EntityType="Self.term" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__account_ty__type__08B54D69" Association="Self.FK__account_ty__type__08B54D69">
+            <End Role="ref_account_type" EntitySet="ref_account_type" />
+            <End Role="account_type" EntitySet="account_type" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chart_of___accou__09A971A2" Association="Self.FK__chart_of___accou__09A971A2">
+            <End Role="account_type" EntitySet="account_type" />
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chart_of___tax_c__0A9D95DB" Association="Self.FK__chart_of___tax_c__0A9D95DB">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__contact__contact__2BFE89A6" Association="Self.FK__contact__contact__2BFE89A6">
+            <End Role="ref_contact_type" EntitySet="ref_contact_type" />
+            <End Role="contact" EntitySet="contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__paid_by__0B91BA14" Association="Self.FK__expense__paid_by__0B91BA14">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="expense" EntitySet="expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__ref_pay__0C85DE4D" Association="Self.FK__expense__ref_pay__0C85DE4D">
+            <End Role="ref_payment_made_type" EntitySet="ref_payment_made_type" />
+            <End Role="expense" EntitySet="expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__supplie__0D7A0286" Association="Self.FK__expense__supplie__0D7A0286">
+            <End Role="contact" EntitySet="contact" />
+            <End Role="expense" EntitySet="expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__tax_id__0E6E26BF" Association="Self.FK__expense__tax_id__0E6E26BF">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="expense" EntitySet="expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__expen__0F624AF8" Association="Self.FK__expense_i__expen__0F624AF8">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__expen__10566F31" Association="Self.FK__expense_i__expen__10566F31">
+            <End Role="expense" EntitySet="expense" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__tax_i__114A936A" Association="Self.FK__expense_i__tax_i__114A936A">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__general_l__accou__123EB7A3" Association="Self.FK__general_l__accou__123EB7A3">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="general_ledger" EntitySet="general_ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__custome__1332DBDC" Association="Self.FK__invoice__custome__1332DBDC">
+            <End Role="contact" EntitySet="contact" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__ref_pay__14270015" Association="Self.FK__invoice__ref_pay__14270015">
+            <End Role="ref_payment_made_type" EntitySet="ref_payment_made_type" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__sales_p__151B244E" Association="Self.FK__invoice__sales_p__151B244E">
+            <End Role="user" EntitySet="user" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__tax_id__160F4887" Association="Self.FK__invoice__tax_id__160F4887">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__terms_i__17036CC0" Association="Self.FK__invoice__terms_i__17036CC0">
+            <End Role="term" EntitySet="term" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__invoi__17F790F9" Association="Self.FK__invoice_i__invoi__17F790F9">
+            <End Role="invoice" EntitySet="invoice" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__item___18EBB532" Association="Self.FK__invoice_i__item___18EBB532">
+            <End Role="item" EntitySet="item" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__tax_i__19DFD96B" Association="Self.FK__invoice_i__tax_i__19DFD96B">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__depos__1AD3FDA4" Association="Self.FK__invoice_p__depos__1AD3FDA4">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__invoi__1BC821DD" Association="Self.FK__invoice_p__invoi__1BC821DD">
+            <End Role="invoice" EntitySet="invoice" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__ref_p__1CBC4616" Association="Self.FK__invoice_p__ref_p__1CBC4616">
+            <End Role="ref_payment_mode" EntitySet="ref_payment_mode" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__purchase_a__1DB06A4F" Association="Self.FK__item__purchase_a__1DB06A4F">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="item" EntitySet="item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__sales_acco__1EA48E88" Association="Self.FK__item__sales_acco__1EA48E88">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="item" EntitySet="item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__tax_id__1F98B2C1" Association="Self.FK__item__tax_id__1F98B2C1">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="item" EntitySet="item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__manual_ad__chart__208CD6FA" Association="Self.FK__manual_ad__chart__208CD6FA">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="manual_adjustment_item" EntitySet="manual_adjustment_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__manual_ad__manua__2180FB33" Association="Self.FK__manual_ad__manua__2180FB33">
+            <End Role="manual_adjustment" EntitySet="manual_adjustment" />
+            <End Role="manual_adjustment_item" EntitySet="manual_adjustment_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profile__currenc__22751F6C" Association="Self.FK__profile__currenc__22751F6C">
+            <End Role="currency" EntitySet="currency" />
+            <End Role="profile" EntitySet="profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tax_code__purcha__236943A5" Association="Self.FK__tax_code__purcha__236943A5">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="tax_code" EntitySet="tax_code" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tax_code__supply__245D67DE" Association="Self.FK__tax_code__supply__245D67DE">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="tax_code" EntitySet="tax_code" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="accountingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account_type">
+          <Key>
+            <PropertyRef Name="account_type_id" />
+          </Key>
+          <Property Name="account_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="range_start" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="range_end" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ref_account_type" Relationship="Self.FK__account_ty__type__08B54D69" FromRole="account_type" ToRole="ref_account_type" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__chart_of___accou__09A971A2" FromRole="account_type" ToRole="chart_of_accounts" />
+        </EntityType>
+        <EntityType Name="chart_of_accounts">
+          <Key>
+            <PropertyRef Name="chart_of_accounts_id" />
+          </Key>
+          <Property Name="chart_of_accounts_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="tax_code_id" Type="Int32" />
+          <Property Name="account_type_id" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="account_type" Relationship="Self.FK__chart_of___accou__09A971A2" FromRole="chart_of_accounts" ToRole="account_type" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__chart_of___tax_c__0A9D95DB" FromRole="chart_of_accounts" ToRole="tax_code" />
+          <NavigationProperty Name="expenses" Relationship="Self.FK__expense__paid_by__0B91BA14" FromRole="chart_of_accounts" ToRole="expense" />
+          <NavigationProperty Name="expense_item" Relationship="Self.FK__expense_i__expen__0F624AF8" FromRole="chart_of_accounts" ToRole="expense_item" />
+          <NavigationProperty Name="general_ledger" Relationship="Self.FK__general_l__accou__123EB7A3" FromRole="chart_of_accounts" ToRole="general_ledger" />
+          <NavigationProperty Name="invoice_payment" Relationship="Self.FK__invoice_p__depos__1AD3FDA4" FromRole="chart_of_accounts" ToRole="invoice_payment" />
+          <NavigationProperty Name="items" Relationship="Self.FK__item__purchase_a__1DB06A4F" FromRole="chart_of_accounts" ToRole="item" />
+          <NavigationProperty Name="items1" Relationship="Self.FK__item__sales_acco__1EA48E88" FromRole="chart_of_accounts" ToRole="item" />
+          <NavigationProperty Name="manual_adjustment_item" Relationship="Self.FK__manual_ad__chart__208CD6FA" FromRole="chart_of_accounts" ToRole="manual_adjustment_item" />
+          <NavigationProperty Name="tax_code1" Relationship="Self.FK__tax_code__purcha__236943A5" FromRole="chart_of_accounts" ToRole="tax_code" />
+          <NavigationProperty Name="tax_code2" Relationship="Self.FK__tax_code__supply__245D67DE" FromRole="chart_of_accounts" ToRole="tax_code" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="contact_id" />
+          </Key>
+          <Property Name="contact_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="first_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="display_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="other" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="postcode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="shipping_address_same" Type="Boolean" />
+          <Property Name="ship_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ship_postcode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ship_city" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ship_state" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ship_country" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="trade_registration_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="gst_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="gst_status_verified_date" Type="DateTime" Precision="0" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="contact_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ref_contact_type" Relationship="Self.FK__contact__contact__2BFE89A6" FromRole="contact" ToRole="ref_contact_type" />
+          <NavigationProperty Name="expenses" Relationship="Self.FK__expense__supplie__0D7A0286" FromRole="contact" ToRole="expense" />
+          <NavigationProperty Name="invoices" Relationship="Self.FK__invoice__custome__1332DBDC" FromRole="contact" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="currency">
+          <Key>
+            <PropertyRef Name="iso_code" />
+          </Key>
+          <Property Name="currency_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iso_code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="sign" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="currency1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="profiles" Relationship="Self.FK__profile__currenc__22751F6C" FromRole="currency" ToRole="profile" />
+        </EntityType>
+        <EntityType Name="expense">
+          <Key>
+            <PropertyRef Name="expense_id" />
+          </Key>
+          <Property Name="expense_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contact_id" Type="Int32" Nullable="false" />
+          <Property Name="paid_by_account_id" Type="Int32" Nullable="false" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="is_bill" Type="Boolean" />
+          <Property Name="bill_date" Type="DateTime" Precision="7" />
+          <Property Name="bill_number" Type="DateTime" Precision="7" />
+          <Property Name="payment_due_date" Type="DateTime" Precision="7" />
+          <Property Name="ref_payment_made_type" Type="Int32" />
+          <Property Name="ref_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="amount_tax_inclusive" Type="Boolean" />
+          <Property Name="subtotal" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="net_amount" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="auto_entry_date" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__expense__paid_by__0B91BA14" FromRole="expense" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="contact" Relationship="Self.FK__expense__supplie__0D7A0286" FromRole="expense" ToRole="contact" />
+          <NavigationProperty Name="ref_payment_made_type1" Relationship="Self.FK__expense__ref_pay__0C85DE4D" FromRole="expense" ToRole="ref_payment_made_type" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__expense__tax_id__0E6E26BF" FromRole="expense" ToRole="tax_code" />
+          <NavigationProperty Name="expense_item" Relationship="Self.FK__expense_i__expen__10566F31" FromRole="expense" ToRole="expense_item" />
+        </EntityType>
+        <EntityType Name="expense_item">
+          <Key>
+            <PropertyRef Name="expense_item_id" />
+          </Key>
+          <Property Name="expense_item_id" Type="Int32" Nullable="false" />
+          <Property Name="expense_id" Type="Int32" Nullable="false" />
+          <Property Name="expense_account_id" Type="Int32" Nullable="false" />
+          <Property Name="subtotal" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <Property Name="rate" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="net_amount" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seq" Type="Int32" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__expense_i__expen__0F624AF8" FromRole="expense_item" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="expense" Relationship="Self.FK__expense_i__expen__10566F31" FromRole="expense_item" ToRole="expense" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__expense_i__tax_i__114A936A" FromRole="expense_item" ToRole="tax_code" />
+        </EntityType>
+        <EntityType Name="general_ledger">
+          <Key>
+            <PropertyRef Name="general_ledger_id" />
+          </Key>
+          <Property Name="general_ledger_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="opening_debit_balance" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="opening_credit_balance" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="date" Type="DateTime" Precision="7" />
+          <Property Name="auto_enty_date" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__general_l__accou__123EB7A3" FromRole="general_ledger" ToRole="chart_of_accounts" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contact_id" Type="Int32" Nullable="false" />
+          <Property Name="invoice_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="invoice_date" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="order_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="terms_id" Type="Int32" Nullable="false" />
+          <Property Name="sales_person_id" Type="Int32" />
+          <Property Name="discount_percent" Type="Double" />
+          <Property Name="discount_value" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="amount_tax_inclusive" Type="Boolean" />
+          <Property Name="subtotal" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="net_amount" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="shipment_fee" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="shipment_date" Type="DateTime" Precision="7" />
+          <Property Name="shipment_via" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ref_payment_made_type_id" Type="Int32" />
+          <Property Name="auto_entry_date" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="contact" Relationship="Self.FK__invoice__custome__1332DBDC" FromRole="invoice" ToRole="contact" />
+          <NavigationProperty Name="ref_payment_made_type" Relationship="Self.FK__invoice__ref_pay__14270015" FromRole="invoice" ToRole="ref_payment_made_type" />
+          <NavigationProperty Name="user" Relationship="Self.FK__invoice__sales_p__151B244E" FromRole="invoice" ToRole="user" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__invoice__tax_id__160F4887" FromRole="invoice" ToRole="tax_code" />
+          <NavigationProperty Name="term" Relationship="Self.FK__invoice__terms_i__17036CC0" FromRole="invoice" ToRole="term" />
+          <NavigationProperty Name="invoice_item" Relationship="Self.FK__invoice_i__invoi__17F790F9" FromRole="invoice" ToRole="invoice_item" />
+          <NavigationProperty Name="invoice_payment" Relationship="Self.FK__invoice_p__invoi__1BC821DD" FromRole="invoice" ToRole="invoice_payment" />
+        </EntityType>
+        <EntityType Name="invoice_item">
+          <Key>
+            <PropertyRef Name="invoice_item_id" />
+          </Key>
+          <Property Name="invoice_item_id" Type="Int32" Nullable="false" />
+          <Property Name="invoice_id" Type="Int32" Nullable="false" />
+          <Property Name="item_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <Property Name="unit_price" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="discount_percent" Type="Double" />
+          <Property Name="discount_value" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="seq" Type="Int32" />
+          <NavigationProperty Name="invoice" Relationship="Self.FK__invoice_i__invoi__17F790F9" FromRole="invoice_item" ToRole="invoice" />
+          <NavigationProperty Name="item" Relationship="Self.FK__invoice_i__item___18EBB532" FromRole="invoice_item" ToRole="item" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__invoice_i__tax_i__19DFD96B" FromRole="invoice_item" ToRole="tax_code" />
+        </EntityType>
+        <EntityType Name="invoice_payment">
+          <Key>
+            <PropertyRef Name="invoice_payment_id" />
+          </Key>
+          <Property Name="invoice_payment_id" Type="Int32" Nullable="false" />
+          <Property Name="deposit_account_id" Type="Int32" Nullable="false" />
+          <Property Name="invoice_id" Type="Int32" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="auto_entry_date" Type="DateTime" Precision="7" />
+          <Property Name="ref_payment_mode_id" Type="Int32" Nullable="false" />
+          <Property Name="reference_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__invoice_p__depos__1AD3FDA4" FromRole="invoice_payment" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="invoice" Relationship="Self.FK__invoice_p__invoi__1BC821DD" FromRole="invoice_payment" ToRole="invoice" />
+          <NavigationProperty Name="ref_payment_mode" Relationship="Self.FK__invoice_p__ref_p__1CBC4616" FromRole="invoice_payment" ToRole="ref_payment_mode" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SKU" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="buy_price" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="sell_price" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="sell_price_tax_inclusive" Type="Boolean" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="sales_account" Type="Int32" />
+          <Property Name="purchase_account" Type="Int32" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__item__purchase_a__1DB06A4F" FromRole="item" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="chart_of_accounts1" Relationship="Self.FK__item__sales_acco__1EA48E88" FromRole="item" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="invoice_item" Relationship="Self.FK__invoice_i__item___18EBB532" FromRole="item" ToRole="invoice_item" />
+          <NavigationProperty Name="tax_code" Relationship="Self.FK__item__tax_id__1F98B2C1" FromRole="item" ToRole="tax_code" />
+        </EntityType>
+        <EntityType Name="manual_adjustment">
+          <Key>
+            <PropertyRef Name="manual_adjustment_id" />
+          </Key>
+          <Property Name="manual_adjustment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ref_no" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="auto_entry_date" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="manual_adjustment_item" Relationship="Self.FK__manual_ad__manua__2180FB33" FromRole="manual_adjustment" ToRole="manual_adjustment_item" />
+        </EntityType>
+        <EntityType Name="manual_adjustment_item">
+          <Key>
+            <PropertyRef Name="manual_adjustment_item_id" />
+          </Key>
+          <Property Name="manual_adjustment_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="manual_adjustment_id" Type="Int32" Nullable="false" />
+          <Property Name="chart_of_accounts_id" Type="Int32" Nullable="false" />
+          <Property Name="debit" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="credit" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seq" Type="Int32" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__manual_ad__chart__208CD6FA" FromRole="manual_adjustment_item" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="manual_adjustment" Relationship="Self.FK__manual_ad__manua__2180FB33" FromRole="manual_adjustment_item" ToRole="manual_adjustment" />
+        </EntityType>
+        <EntityType Name="profile">
+          <Key>
+            <PropertyRef Name="profile_id" />
+          </Key>
+          <Property Name="profile_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="trade_registration_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tax_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="gst_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="current_financial_year" Type="DateTime" Precision="0" />
+          <Property Name="financial_year_start" Type="DateTime" Precision="0" />
+          <Property Name="financial_year_end" Type="DateTime" Precision="0" />
+          <Property Name="currency_code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="product_version" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="GAF_version" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="currency" Relationship="Self.FK__profile__currenc__22751F6C" FromRole="profile" ToRole="currency" />
+        </EntityType>
+        <EntityType Name="ref_account_type">
+          <Key>
+            <PropertyRef Name="ref_account_type_id" />
+          </Key>
+          <Property Name="ref_account_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account_type" Relationship="Self.FK__account_ty__type__08B54D69" FromRole="ref_account_type" ToRole="account_type" />
+        </EntityType>
+        <EntityType Name="ref_contact_type">
+          <Key>
+            <PropertyRef Name="ref_contact_type_id" />
+          </Key>
+          <Property Name="ref_contact_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="contacts" Relationship="Self.FK__contact__contact__2BFE89A6" FromRole="ref_contact_type" ToRole="contact" />
+        </EntityType>
+        <EntityType Name="ref_payment_made_type">
+          <Key>
+            <PropertyRef Name="ref_payment_made_type_id" />
+          </Key>
+          <Property Name="ref_payment_made_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="expenses" Relationship="Self.FK__expense__ref_pay__0C85DE4D" FromRole="ref_payment_made_type" ToRole="expense" />
+          <NavigationProperty Name="invoices" Relationship="Self.FK__invoice__ref_pay__14270015" FromRole="ref_payment_made_type" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="ref_payment_mode">
+          <Key>
+            <PropertyRef Name="ref_payment_mode_id" />
+          </Key>
+          <Property Name="ref_payment_mode_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="invoice_payment" Relationship="Self.FK__invoice_p__ref_p__1CBC4616" FromRole="ref_payment_mode" ToRole="invoice_payment" />
+        </EntityType>
+        <EntityType Name="tax_code">
+          <Key>
+            <PropertyRef Name="tax_code_id" />
+          </Key>
+          <Property Name="tax_code_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tax_codename" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_code_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tax_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="tax_type_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="purchase_taxable" Type="Boolean" Nullable="false" />
+          <Property Name="purchase_tax_rate" Type="Double" />
+          <Property Name="supply_taxable" Type="Boolean" Nullable="false" />
+          <Property Name="supply_tax_rate" Type="Double" />
+          <Property Name="registration_no" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tax_agency" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="effective_date" Type="DateTime" Precision="0" />
+          <Property Name="purchase_account_id" Type="Int32" />
+          <Property Name="supply_account_id" Type="Int32" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="chart_of_accounts" Relationship="Self.FK__chart_of___tax_c__0A9D95DB" FromRole="tax_code" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="chart_of_accounts1" Relationship="Self.FK__tax_code__purcha__236943A5" FromRole="tax_code" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="chart_of_accounts2" Relationship="Self.FK__tax_code__supply__245D67DE" FromRole="tax_code" ToRole="chart_of_accounts" />
+          <NavigationProperty Name="expenses" Relationship="Self.FK__expense__tax_id__0E6E26BF" FromRole="tax_code" ToRole="expense" />
+          <NavigationProperty Name="expense_item" Relationship="Self.FK__expense_i__tax_i__114A936A" FromRole="tax_code" ToRole="expense_item" />
+          <NavigationProperty Name="invoices" Relationship="Self.FK__invoice__tax_id__160F4887" FromRole="tax_code" ToRole="invoice" />
+          <NavigationProperty Name="invoice_item" Relationship="Self.FK__invoice_i__tax_i__19DFD96B" FromRole="tax_code" ToRole="invoice_item" />
+          <NavigationProperty Name="items" Relationship="Self.FK__item__tax_id__1F98B2C1" FromRole="tax_code" ToRole="item" />
+        </EntityType>
+        <EntityType Name="term">
+          <Key>
+            <PropertyRef Name="term_id" />
+          </Key>
+          <Property Name="term_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="term_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="allowance" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="invoices" Relationship="Self.FK__invoice__terms_i__17036CC0" FromRole="term" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="display_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="invoices" Relationship="Self.FK__invoice__sales_p__151B244E" FromRole="user" ToRole="invoice" />
+        </EntityType>
+        <Association Name="FK__account_ty__type__08B54D69">
+          <End Role="ref_account_type" Type="Self.ref_account_type" Multiplicity="1" />
+          <End Role="account_type" Type="Self.account_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_account_type">
+              <PropertyRef Name="ref_account_type_id" />
+            </Principal>
+            <Dependent Role="account_type">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chart_of___accou__09A971A2">
+          <End Role="account_type" Type="Self.account_type" Multiplicity="1" />
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account_type">
+              <PropertyRef Name="account_type_id" />
+            </Principal>
+            <Dependent Role="chart_of_accounts">
+              <PropertyRef Name="account_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chart_of___tax_c__0A9D95DB">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="chart_of_accounts">
+              <PropertyRef Name="tax_code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__paid_by__0B91BA14">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="paid_by_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__expen__0F624AF8">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="expense_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__general_l__accou__123EB7A3">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="general_ledger" Type="Self.general_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="general_ledger">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__depos__1AD3FDA4">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="deposit_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__purchase_a__1DB06A4F">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="purchase_account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__sales_acco__1EA48E88">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="sales_account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__manual_ad__chart__208CD6FA">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="1" />
+          <End Role="manual_adjustment_item" Type="Self.manual_adjustment_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="manual_adjustment_item">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tax_code__purcha__236943A5">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="tax_code">
+              <PropertyRef Name="purchase_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tax_code__supply__245D67DE">
+          <End Role="chart_of_accounts" Type="Self.chart_of_accounts" Multiplicity="0..1" />
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chart_of_accounts">
+              <PropertyRef Name="chart_of_accounts_id" />
+            </Principal>
+            <Dependent Role="tax_code">
+              <PropertyRef Name="supply_account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__contact__contact__2BFE89A6">
+          <End Role="ref_contact_type" Type="Self.ref_contact_type" Multiplicity="1" />
+          <End Role="contact" Type="Self.contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_contact_type">
+              <PropertyRef Name="ref_contact_type_id" />
+            </Principal>
+            <Dependent Role="contact">
+              <PropertyRef Name="contact_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__supplie__0D7A0286">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="contact_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__custome__1332DBDC">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="contact_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profile__currenc__22751F6C">
+          <End Role="currency" Type="Self.currency" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="currency">
+              <PropertyRef Name="iso_code" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="currency_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__ref_pay__0C85DE4D">
+          <End Role="ref_payment_made_type" Type="Self.ref_payment_made_type" Multiplicity="0..1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_made_type">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="ref_payment_made_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense__tax_id__0E6E26BF">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="expense" Type="Self.expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="expense">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__expen__10566F31">
+          <End Role="expense" Type="Self.expense" Multiplicity="1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expense">
+              <PropertyRef Name="expense_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="expense_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expense_i__tax_i__114A936A">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="expense_item" Type="Self.expense_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="expense_item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__ref_pay__14270015">
+          <End Role="ref_payment_made_type" Type="Self.ref_payment_made_type" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_made_type">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="ref_payment_made_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__sales_p__151B244E">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="sales_person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__tax_id__160F4887">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice__terms_i__17036CC0">
+          <End Role="term" Type="Self.term" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="term">
+              <PropertyRef Name="term_id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="terms_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__invoi__17F790F9">
+          <End Role="invoice" Type="Self.invoice" Multiplicity="1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="invoice_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="invoice_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__invoi__1BC821DD">
+          <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="invoice_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="invoice_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__item___18EBB532">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_i__tax_i__19DFD96B">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="invoice_item" Type="Self.invoice_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="invoice_item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__invoice_p__ref_p__1CBC4616">
+          <End Role="ref_payment_mode" Type="Self.ref_payment_mode" Multiplicity="1" />
+          <End Role="invoice_payment" Type="Self.invoice_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_payment_mode">
+              <PropertyRef Name="ref_payment_mode_id" />
+            </Principal>
+            <Dependent Role="invoice_payment">
+              <PropertyRef Name="ref_payment_mode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__item__tax_id__1F98B2C1">
+          <End Role="tax_code" Type="Self.tax_code" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax_code">
+              <PropertyRef Name="tax_code_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__manual_ad__manua__2180FB33">
+          <End Role="manual_adjustment" Type="Self.manual_adjustment" Multiplicity="1" />
+          <End Role="manual_adjustment_item" Type="Self.manual_adjustment_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="manual_adjustment">
+              <PropertyRef Name="manual_adjustment_id" />
+            </Principal>
+            <Dependent Role="manual_adjustment_item">
+              <PropertyRef Name="manual_adjustment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="account_type" EntityType="Self.account_type" />
+          <EntitySet Name="chart_of_accounts" EntityType="Self.chart_of_accounts" />
+          <EntitySet Name="contacts" EntityType="Self.contact" />
+          <EntitySet Name="currencies" EntityType="Self.currency" />
+          <EntitySet Name="expenses" EntityType="Self.expense" />
+          <EntitySet Name="expense_item" EntityType="Self.expense_item" />
+          <EntitySet Name="general_ledger" EntityType="Self.general_ledger" />
+          <EntitySet Name="invoices" EntityType="Self.invoice" />
+          <EntitySet Name="invoice_item" EntityType="Self.invoice_item" />
+          <EntitySet Name="invoice_payment" EntityType="Self.invoice_payment" />
+          <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="manual_adjustment" EntityType="Self.manual_adjustment" />
+          <EntitySet Name="manual_adjustment_item" EntityType="Self.manual_adjustment_item" />
+          <EntitySet Name="profiles" EntityType="Self.profile" />
+          <EntitySet Name="ref_account_type" EntityType="Self.ref_account_type" />
+          <EntitySet Name="ref_contact_type" EntityType="Self.ref_contact_type" />
+          <EntitySet Name="ref_payment_made_type" EntityType="Self.ref_payment_made_type" />
+          <EntitySet Name="ref_payment_mode" EntityType="Self.ref_payment_mode" />
+          <EntitySet Name="tax_code" EntityType="Self.tax_code" />
+          <EntitySet Name="terms" EntityType="Self.term" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__account_ty__type__08B54D69" Association="Self.FK__account_ty__type__08B54D69">
+            <End Role="ref_account_type" EntitySet="ref_account_type" />
+            <End Role="account_type" EntitySet="account_type" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chart_of___accou__09A971A2" Association="Self.FK__chart_of___accou__09A971A2">
+            <End Role="account_type" EntitySet="account_type" />
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chart_of___tax_c__0A9D95DB" Association="Self.FK__chart_of___tax_c__0A9D95DB">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__paid_by__0B91BA14" Association="Self.FK__expense__paid_by__0B91BA14">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="expense" EntitySet="expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__expen__0F624AF8" Association="Self.FK__expense_i__expen__0F624AF8">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__general_l__accou__123EB7A3" Association="Self.FK__general_l__accou__123EB7A3">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="general_ledger" EntitySet="general_ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__depos__1AD3FDA4" Association="Self.FK__invoice_p__depos__1AD3FDA4">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__purchase_a__1DB06A4F" Association="Self.FK__item__purchase_a__1DB06A4F">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="item" EntitySet="items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__sales_acco__1EA48E88" Association="Self.FK__item__sales_acco__1EA48E88">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="item" EntitySet="items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__manual_ad__chart__208CD6FA" Association="Self.FK__manual_ad__chart__208CD6FA">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="manual_adjustment_item" EntitySet="manual_adjustment_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tax_code__purcha__236943A5" Association="Self.FK__tax_code__purcha__236943A5">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="tax_code" EntitySet="tax_code" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tax_code__supply__245D67DE" Association="Self.FK__tax_code__supply__245D67DE">
+            <End Role="chart_of_accounts" EntitySet="chart_of_accounts" />
+            <End Role="tax_code" EntitySet="tax_code" />
+          </AssociationSet>
+          <AssociationSet Name="FK__contact__contact__2BFE89A6" Association="Self.FK__contact__contact__2BFE89A6">
+            <End Role="ref_contact_type" EntitySet="ref_contact_type" />
+            <End Role="contact" EntitySet="contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__supplie__0D7A0286" Association="Self.FK__expense__supplie__0D7A0286">
+            <End Role="contact" EntitySet="contacts" />
+            <End Role="expense" EntitySet="expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__custome__1332DBDC" Association="Self.FK__invoice__custome__1332DBDC">
+            <End Role="contact" EntitySet="contacts" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profile__currenc__22751F6C" Association="Self.FK__profile__currenc__22751F6C">
+            <End Role="currency" EntitySet="currencies" />
+            <End Role="profile" EntitySet="profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__ref_pay__0C85DE4D" Association="Self.FK__expense__ref_pay__0C85DE4D">
+            <End Role="ref_payment_made_type" EntitySet="ref_payment_made_type" />
+            <End Role="expense" EntitySet="expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense__tax_id__0E6E26BF" Association="Self.FK__expense__tax_id__0E6E26BF">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="expense" EntitySet="expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__expen__10566F31" Association="Self.FK__expense_i__expen__10566F31">
+            <End Role="expense" EntitySet="expenses" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expense_i__tax_i__114A936A" Association="Self.FK__expense_i__tax_i__114A936A">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="expense_item" EntitySet="expense_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__ref_pay__14270015" Association="Self.FK__invoice__ref_pay__14270015">
+            <End Role="ref_payment_made_type" EntitySet="ref_payment_made_type" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__sales_p__151B244E" Association="Self.FK__invoice__sales_p__151B244E">
+            <End Role="user" EntitySet="users" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__tax_id__160F4887" Association="Self.FK__invoice__tax_id__160F4887">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice__terms_i__17036CC0" Association="Self.FK__invoice__terms_i__17036CC0">
+            <End Role="term" EntitySet="terms" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__invoi__17F790F9" Association="Self.FK__invoice_i__invoi__17F790F9">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__invoi__1BC821DD" Association="Self.FK__invoice_p__invoi__1BC821DD">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__item___18EBB532" Association="Self.FK__invoice_i__item___18EBB532">
+            <End Role="item" EntitySet="items" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_i__tax_i__19DFD96B" Association="Self.FK__invoice_i__tax_i__19DFD96B">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="invoice_item" EntitySet="invoice_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__invoice_p__ref_p__1CBC4616" Association="Self.FK__invoice_p__ref_p__1CBC4616">
+            <End Role="ref_payment_mode" EntitySet="ref_payment_mode" />
+            <End Role="invoice_payment" EntitySet="invoice_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__item__tax_id__1F98B2C1" Association="Self.FK__item__tax_id__1F98B2C1">
+            <End Role="tax_code" EntitySet="tax_code" />
+            <End Role="item" EntitySet="items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__manual_ad__manua__2180FB33" Association="Self.FK__manual_ad__manua__2180FB33">
+            <End Role="manual_adjustment" EntitySet="manual_adjustment" />
+            <End Role="manual_adjustment_item" EntitySet="manual_adjustment_item" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="accountingModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="account_type">
+            <EntityTypeMapping TypeName="accountingModel.account_type">
+              <MappingFragment StoreEntitySet="account_type">
+                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="range_start" ColumnName="range_start" />
+                <ScalarProperty Name="range_end" ColumnName="range_end" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chart_of_accounts">
+            <EntityTypeMapping TypeName="accountingModel.chart_of_accounts">
+              <MappingFragment StoreEntitySet="chart_of_accounts">
+                <ScalarProperty Name="chart_of_accounts_id" ColumnName="chart_of_accounts_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="tax_code_id" ColumnName="tax_code_id" />
+                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contacts">
+            <EntityTypeMapping TypeName="accountingModel.contact">
+              <MappingFragment StoreEntitySet="contact">
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="suffix" ColumnName="suffix" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="other" ColumnName="other" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="shipping_address_same" ColumnName="shipping_address_same" />
+                <ScalarProperty Name="ship_address" ColumnName="ship_address" />
+                <ScalarProperty Name="ship_postcode" ColumnName="ship_postcode" />
+                <ScalarProperty Name="ship_city" ColumnName="ship_city" />
+                <ScalarProperty Name="ship_state" ColumnName="ship_state" />
+                <ScalarProperty Name="ship_country" ColumnName="ship_country" />
+                <ScalarProperty Name="trade_registration_no" ColumnName="trade_registration_no" />
+                <ScalarProperty Name="gst_number" ColumnName="gst_number" />
+                <ScalarProperty Name="gst_status_verified_date" ColumnName="gst_status_verified_date" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="contact_type" ColumnName="contact_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="currencies">
+            <EntityTypeMapping TypeName="accountingModel.currency">
+              <MappingFragment StoreEntitySet="currency">
+                <ScalarProperty Name="currency_id" ColumnName="currency_id" />
+                <ScalarProperty Name="iso_code" ColumnName="iso_code" />
+                <ScalarProperty Name="sign" ColumnName="sign" />
+                <ScalarProperty Name="currency1" ColumnName="currency" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expenses">
+            <EntityTypeMapping TypeName="accountingModel.expense">
+              <MappingFragment StoreEntitySet="expense">
+                <ScalarProperty Name="expense_id" ColumnName="expense_id" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="paid_by_account_id" ColumnName="paid_by_account_id" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="is_bill" ColumnName="is_bill" />
+                <ScalarProperty Name="bill_date" ColumnName="bill_date" />
+                <ScalarProperty Name="bill_number" ColumnName="bill_number" />
+                <ScalarProperty Name="payment_due_date" ColumnName="payment_due_date" />
+                <ScalarProperty Name="ref_payment_made_type" ColumnName="ref_payment_made_type" />
+                <ScalarProperty Name="ref_no" ColumnName="ref_no" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+                <ScalarProperty Name="amount_tax_inclusive" ColumnName="amount_tax_inclusive" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="net_amount" ColumnName="net_amount" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="auto_entry_date" ColumnName="auto_entry_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expense_item">
+            <EntityTypeMapping TypeName="accountingModel.expense_item">
+              <MappingFragment StoreEntitySet="expense_item">
+                <ScalarProperty Name="expense_item_id" ColumnName="expense_item_id" />
+                <ScalarProperty Name="expense_id" ColumnName="expense_id" />
+                <ScalarProperty Name="expense_account_id" ColumnName="expense_account_id" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+                <ScalarProperty Name="net_amount" ColumnName="net_amount" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="seq" ColumnName="seq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="general_ledger">
+            <EntityTypeMapping TypeName="accountingModel.general_ledger">
+              <MappingFragment StoreEntitySet="general_ledger">
+                <ScalarProperty Name="general_ledger_id" ColumnName="general_ledger_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="opening_debit_balance" ColumnName="opening_debit_balance" />
+                <ScalarProperty Name="opening_credit_balance" ColumnName="opening_credit_balance" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="auto_enty_date" ColumnName="auto_enty_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoices">
+            <EntityTypeMapping TypeName="accountingModel.invoice">
+              <MappingFragment StoreEntitySet="invoice">
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+                <ScalarProperty Name="invoice_date" ColumnName="invoice_date" />
+                <ScalarProperty Name="order_number" ColumnName="order_number" />
+                <ScalarProperty Name="terms_id" ColumnName="terms_id" />
+                <ScalarProperty Name="sales_person_id" ColumnName="sales_person_id" />
+                <ScalarProperty Name="discount_percent" ColumnName="discount_percent" />
+                <ScalarProperty Name="discount_value" ColumnName="discount_value" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+                <ScalarProperty Name="amount_tax_inclusive" ColumnName="amount_tax_inclusive" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="net_amount" ColumnName="net_amount" />
+                <ScalarProperty Name="shipment_fee" ColumnName="shipment_fee" />
+                <ScalarProperty Name="shipment_date" ColumnName="shipment_date" />
+                <ScalarProperty Name="shipment_via" ColumnName="shipment_via" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="ref_payment_made_type_id" ColumnName="ref_payment_made_type_id" />
+                <ScalarProperty Name="auto_entry_date" ColumnName="auto_entry_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoice_item">
+            <EntityTypeMapping TypeName="accountingModel.invoice_item">
+              <MappingFragment StoreEntitySet="invoice_item">
+                <ScalarProperty Name="invoice_item_id" ColumnName="invoice_item_id" />
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="discount_percent" ColumnName="discount_percent" />
+                <ScalarProperty Name="discount_value" ColumnName="discount_value" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+                <ScalarProperty Name="seq" ColumnName="seq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoice_payment">
+            <EntityTypeMapping TypeName="accountingModel.invoice_payment">
+              <MappingFragment StoreEntitySet="invoice_payment">
+                <ScalarProperty Name="invoice_payment_id" ColumnName="invoice_payment_id" />
+                <ScalarProperty Name="deposit_account_id" ColumnName="deposit_account_id" />
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="auto_entry_date" ColumnName="auto_entry_date" />
+                <ScalarProperty Name="ref_payment_mode_id" ColumnName="ref_payment_mode_id" />
+                <ScalarProperty Name="reference_no" ColumnName="reference_no" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="accountingModel.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="buy_price" ColumnName="buy_price" />
+                <ScalarProperty Name="sell_price" ColumnName="sell_price" />
+                <ScalarProperty Name="sell_price_tax_inclusive" ColumnName="sell_price_tax_inclusive" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="sales_account" ColumnName="sales_account" />
+                <ScalarProperty Name="purchase_account" ColumnName="purchase_account" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="manual_adjustment">
+            <EntityTypeMapping TypeName="accountingModel.manual_adjustment">
+              <MappingFragment StoreEntitySet="manual_adjustment">
+                <ScalarProperty Name="manual_adjustment_id" ColumnName="manual_adjustment_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="ref_no" ColumnName="ref_no" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="auto_entry_date" ColumnName="auto_entry_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="manual_adjustment_item">
+            <EntityTypeMapping TypeName="accountingModel.manual_adjustment_item">
+              <MappingFragment StoreEntitySet="manual_adjustment_item">
+                <ScalarProperty Name="manual_adjustment_item_id" ColumnName="manual_adjustment_item_id" />
+                <ScalarProperty Name="manual_adjustment_id" ColumnName="manual_adjustment_id" />
+                <ScalarProperty Name="chart_of_accounts_id" ColumnName="chart_of_accounts_id" />
+                <ScalarProperty Name="debit" ColumnName="debit" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="seq" ColumnName="seq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profiles">
+            <EntityTypeMapping TypeName="accountingModel.profile">
+              <MappingFragment StoreEntitySet="profile">
+                <ScalarProperty Name="profile_id" ColumnName="profile_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="trade_registration_no" ColumnName="trade_registration_no" />
+                <ScalarProperty Name="tax_no" ColumnName="tax_no" />
+                <ScalarProperty Name="gst_no" ColumnName="gst_no" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="current_financial_year" ColumnName="current_financial_year" />
+                <ScalarProperty Name="financial_year_start" ColumnName="financial_year_start" />
+                <ScalarProperty Name="financial_year_end" ColumnName="financial_year_end" />
+                <ScalarProperty Name="currency_code" ColumnName="currency_code" />
+                <ScalarProperty Name="product_version" ColumnName="product_version" />
+                <ScalarProperty Name="GAF_version" ColumnName="GAF_version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_account_type">
+            <EntityTypeMapping TypeName="accountingModel.ref_account_type">
+              <MappingFragment StoreEntitySet="ref_account_type">
+                <ScalarProperty Name="ref_account_type_id" ColumnName="ref_account_type_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_contact_type">
+            <EntityTypeMapping TypeName="accountingModel.ref_contact_type">
+              <MappingFragment StoreEntitySet="ref_contact_type">
+                <ScalarProperty Name="ref_contact_type_id" ColumnName="ref_contact_type_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_payment_made_type">
+            <EntityTypeMapping TypeName="accountingModel.ref_payment_made_type">
+              <MappingFragment StoreEntitySet="ref_payment_made_type">
+                <ScalarProperty Name="ref_payment_made_type_id" ColumnName="ref_payment_made_type_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_payment_mode">
+            <EntityTypeMapping TypeName="accountingModel.ref_payment_mode">
+              <MappingFragment StoreEntitySet="ref_payment_mode">
+                <ScalarProperty Name="ref_payment_mode_id" ColumnName="ref_payment_mode_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tax_code">
+            <EntityTypeMapping TypeName="accountingModel.tax_code">
+              <MappingFragment StoreEntitySet="tax_code">
+                <ScalarProperty Name="tax_code_id" ColumnName="tax_code_id" />
+                <ScalarProperty Name="tax_codename" ColumnName="tax_codename" />
+                <ScalarProperty Name="tax_code_desc" ColumnName="tax_code_desc" />
+                <ScalarProperty Name="tax_type" ColumnName="tax_type" />
+                <ScalarProperty Name="tax_type_desc" ColumnName="tax_type_desc" />
+                <ScalarProperty Name="purchase_taxable" ColumnName="purchase_taxable" />
+                <ScalarProperty Name="purchase_tax_rate" ColumnName="purchase_tax_rate" />
+                <ScalarProperty Name="supply_taxable" ColumnName="supply_taxable" />
+                <ScalarProperty Name="supply_tax_rate" ColumnName="supply_tax_rate" />
+                <ScalarProperty Name="registration_no" ColumnName="registration_no" />
+                <ScalarProperty Name="tax_agency" ColumnName="tax_agency" />
+                <ScalarProperty Name="effective_date" ColumnName="effective_date" />
+                <ScalarProperty Name="purchase_account_id" ColumnName="purchase_account_id" />
+                <ScalarProperty Name="supply_account_id" ColumnName="supply_account_id" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="terms">
+            <EntityTypeMapping TypeName="accountingModel.term">
+              <MappingFragment StoreEntitySet="term">
+                <ScalarProperty Name="term_id" ColumnName="term_id" />
+                <ScalarProperty Name="term_name" ColumnName="term_name" />
+                <ScalarProperty Name="allowance" ColumnName="allowance" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="accountingModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
